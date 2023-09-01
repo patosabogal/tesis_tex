@@ -1,0 +1,26 @@
+In developing the formal verification tool, based on VeriSol's approach, the tool has four key components:.
+N key steps:
+ - Generating a translation from TEAL to Boogie.
+ - Defining preconditions and postconditions to the smart contract functions.
+ - Running CORRAL.
+
+
+To simplfy the design, bytes are represeted with an integer (figure out the int mapping function, similar to VeriSol's approach).
+# Preliminary should the explain how the AVM works
+Translation from TEAL to Boogie.
+  The initial idea taken was to model the AVM in Boogie: The Stack pointer was represented with a Global integer and the Stack with a global [int] int map. Global storage is represented with a [int] int map, and the Local storage is an [int] [int] int map, where the first key is the int representation of the address used for the local storage.
+For each AVM operation, a Boogie counterpart was implemented. This approach allowed for a simple one-to-one translation from TEAL to Boogie.
+
+Fig showing TEAL code example, Fig showing Boogie translation
+
+This approach proved to be too computationally intensive, CORRAL's variable tracking of simple non-trivial smart contracts translated into Boogie would take a long time (?) and the execution increased with smart contract complexity.
+
+To reduce CORRAL's search space (??), various optimization's were taken at cost of discarding functionality. Mainly replacing the stack & stack pointer with registers. To achieve this, Tealift (r) is used.
+Tealift is a tool currently developed by CoinFabrik that takes TEAL code and converts to single static assigment form, then it outputs the dataflow graph in JSON format. The dataflow is used to rebuild the smart contract in Boogie code.
+
+ARC-04, ARC-32:
+Similarly to Ethereum's ABI, Algorand recently added their own transaction calling conventions, namely ARC-04 [?]. It allows wallets and decentralized applications to properly enconde call transactions based on a descriptive contract interface. ARC-32 expands on the aforementioned request for comments by adding more information to the contract specification[?], essential for the static analysis, though still in DRAFT status at the time of writing.
+The tool natively supports contracts compliant with ARC-32, although this might changed given the status of the ARC.
+
+
+
