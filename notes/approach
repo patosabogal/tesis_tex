@@ -1,7 +1,7 @@
-In developing the formal verification tool, based on VeriSol's approach, the tool has four key components:.
-N key steps:
+In developing the formal verification tool, based on VeriSol's approach, the tool has four key components:
  - Generating a translation from TEAL to Boogie.
- - Defining preconditions and postconditions to the smart contract functions.
+ - Creating a method harness (what is this) based on the application specification.
+ - Adding preconditions and postconditions to the smart contract functions.
  - Running CORRAL.
 
 
@@ -20,7 +20,9 @@ Tealift is a tool currently developed by CoinFabrik that takes TEAL code and con
 
 ARC-04, ARC-32:
 Similarly to Ethereum's ABI, Algorand recently added their own transaction calling conventions, namely ARC-04 [?]. It allows wallets and decentralized applications to properly enconde call transactions based on a descriptive contract interface. ARC-32 expands on the aforementioned request for comments by adding more information to the contract specification[?], essential for the static analysis, though still in DRAFT status at the time of writing.
-The tool natively supports contracts compliant with ARC-32, although this might changed given the status of the ARC.
+The for harness generation, requires information on the contract's ABI. The the tool natively supports ARC-32 ApplicationSpecification (can be generated automatically by using tools like Beaker), although this might changed given the status of the ARC. For other contracts (practicamente todo el resto), a custom JSON format was can be used as input, provided that if follows a given schema[show schema?].
 
+Assertions:
+Another custom JSON schema was created for pre and postconditions.
 
-
+RUN EXAMPLE OF CODE TRANSFORMATIONS.
